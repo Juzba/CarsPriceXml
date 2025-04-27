@@ -51,7 +51,12 @@ public partial class MainWindow : Window
 
                             foreach (var item in carPricesList)
                             {
-                                if (item.Name.Contains(car.Name)) { isCarInList = true; break; }
+                                if (item.Name.Contains(car.Name))
+                                {
+                                    isCarInList = true;
+                                    item.Price += car.PriceD;
+                                    break;
+                                }
                             }
                             if (isCarInList) continue;
                             else { carPricesList.Add(new CarPrice(car.Name, car.PriceD, 0)); }

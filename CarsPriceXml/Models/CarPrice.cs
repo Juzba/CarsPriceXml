@@ -4,8 +4,8 @@
     {
 
         public string Name { get; }
-        public double Price { get; }
-        public double PriceWithDPH { get; }
+        public double Price { get; set; }
+        public double PriceWithDPH { get; set; }
 
 
         public CarPrice(string name, double price, double priceWithDph)
