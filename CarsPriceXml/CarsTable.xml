@@ -1,0 +1,86 @@
+<Data>
+
+   <Car>
+      <Name>Škoda Oktávia</Name>
+      <Date>2.12.2010</Date>
+      <Price>500.000,-</Price>
+      <DPH>20</DPH>
+   </Car>
+
+   <Car>
+      <Name>Škoda Felicia</Name>
+      <Date>3.12.2000 </Date>
+      <Price>210.000,-</Price>
+      <DPH>20</DPH>
+   </Car>
+
+	<Car>
+		<Name>Škoda Fabia</Name>
+		<Date>4.12.2010</Date>
+		<Price>350.000,-</Price>
+		<DPH>20</DPH>
+	</Car>
+
+	<Car>
+		<Name>Škoda Oktávia</Name>
+		<Date>4.12.2010</Date>
+		<Price>500.000,-</Price>
+		<DPH>20</DPH>
+	</Car>
+
+	<Car>
+		<Name>Škoda Fabia</Name>
+		<Date>5.12.2010</Date>
+		<Price>350.000,-</Price>
+		<DPH>20</DPH>
+	</Car>
+
+	<Car>
+		<Name>Škoda Fabia</Name>
+		<Date>6.12.2010</Date>
+		<Price>350.000,-</Price>
+		<DPH>20</DPH>
+	</Car>
+
+	<Car>
+		<Name>Škoda Forman</Name>
+		<Date>4.12.2000</Date>
+		<Price>100.000,-</Price>
+		<DPH>19</DPH>
+	</Car>
+
+	<Car>
+		<Name>Škoda Favorit</Name>
+		<Date>5.12.2000</Date>
+		<Price>80.000,-</Price>
+		<DPH>19</DPH>
+	</Car>
+
+	<Car>
+		<Name>Škoda Forman</Name>
+		<Date>6.12.2000</Date>
+		<Price>100.000,-</Price>
+		<DPH>19</DPH>
+	</Car>
+
+	<Car>
+		<Name>Škoda Felicia</Name>
+		<Date>3.12.2000</Date>
+		<Price>210.000,-</Price>
+		<DPH>19</DPH>
+	</Car>
+
+	<Car>
+		<Name>Škoda Felicia</Name>
+		<Date>2.12.2000</Date>
+		<Price>210.000,-</Price>
+		<DPH>19</DPH>
+	</Car>
+
+	<Car>
+		<Name>Škoda Oktávia</Name>
+		<Date>7.12.2010</Date>
+		<Price>500.000,-</Price>
+		<DPH>20</DPH>
+	</Car>
+</Data>
