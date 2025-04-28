@@ -1,4 +1,5 @@
-﻿using CarsPriceXml.Models;
+﻿using CarsPriceXml.Components;
+using CarsPriceXml.Models;
 using Microsoft.Win32;
 using System.IO;
 using System.Windows;
@@ -10,16 +11,73 @@ namespace CarsPriceXml;
 public partial class MainWindow : Window
 {
     Data _data = new();
+    bool _isFileOpen = false;
+    int _count = 0;
 
     public MainWindow()
     {
         InitializeComponent();
     }
 
-    private void WindowMain()
+    private void MainProg()
     {
         List<CarPrice> carPricesList = new();
 
+        if (_isFileOpen)
+        {
+
+            _count++;
+            text.Text = _count.ToString();
+
+            foreach (var car in _data.Cars)
+            {
+
+                bool isCarInList = false;
+
+                foreach (var item in carPricesList)
+                {
+                    if (item.Name.Contains(car.Name))
+                    {
+                        isCarInList = true;
+
+                        // sell on weekend, week or evrything
+                        if (Functions.SumCondition(this, car))
+                        {
+                            item.Price += car.PriceD;
+                            item.PriceWithDPH += Functions.DPHCalc(car.PriceD, car.DPH);
+                        }
+                        break;
+                    }
+                }
+                if (isCarInList) continue;
+                else
+                {
+                    if (Functions.SumCondition(this, car))
+                        carPricesList.Add(new CarPrice(car.Name, car.PriceD, Functions.DPHCalc(car.PriceD, car.DPH)));
+                    else
+                        carPricesList.Add(new CarPrice(car.Name, 0, 0));
+                }
+            }
+
+            DataGridInput.ItemsSource = _data.Cars;
+            DataGridResult.ItemsSource = carPricesList;
+        }
+
+    }
+
+
+
+
+
+
+
+
+
+
+
+
+    private void ButtonOpenXmlFile_Click(object sender, RoutedEventArgs e)
+    {
         textBlockError.Text = "";
         textBlockError.Visibility = Visibility.Hidden;
 
@@ -32,76 +90,31 @@ public partial class MainWindow : Window
         {
             textBlockPath.Text = openFD.FileName;
 
-            try
+            XmlSerializer serializer = new XmlSerializer(typeof(Data));
+
+            using (StreamReader reader = new(openFD.FileName))
             {
-                XmlSerializer serializer = new XmlSerializer(typeof(Data));
-
-                using (StreamReader reader = new(openFD.FileName))
+                try
                 {
-
                     _data = (Data)serializer.Deserialize(reader);
-
-                    if (_data?.Cars != null)
-                    {
-
-                        foreach (var car in _data.Cars)
-                        {
-
-                            bool isCarInList = false;
-
-                            foreach (var item in carPricesList)
-                            {
-                                if (item.Name.Contains(car.Name))
-                                {
-                                    isCarInList = true;
-                                    item.Price += car.PriceD;
-                                    break;
-                                }
-                            }
-                            if (isCarInList) continue;
-                            else { carPricesList.Add(new CarPrice(car.Name, car.PriceD, 0)); }
-                        }
-
-                        DataGridInput.ItemsSource = _data.Cars;
-                        DataGridResult.ItemsSource = carPricesList;
-                    }
-
-                    else
-                    {
-                        textBlockError.Visibility = Visibility.Visible;
-                        textBlockError.Text = "Chyba: soubor otevřen, data nenalezeny.";
-                    }
                 }
 
-
+                catch (Exception)
+                {
+                    textBlockError.Visibility = Visibility.Visible;
+                    textBlockError.Text = $"Chyba čtení XML.";
+                    //throw;
+                }
             }
-            catch (Exception)
-            {
-                textBlockError.Visibility = Visibility.Visible;
-                textBlockError.Text = "Chyba při načítání dat Z XML nebo v průběhu.";
-                throw;
-            }
 
-
-
-
-
-
+            _isFileOpen = true;
+            MainProg();
         }
-
-
-
-
-
-
-
-
     }
 
 
-    private void ButtonOpen_Click(object sender, RoutedEventArgs e)
+    private void ComboBoxClosed(object sender, EventArgs e)
     {
-        WindowMain();
-
+        MainProg();
     }
 }

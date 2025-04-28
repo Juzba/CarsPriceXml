@@ -2,8 +2,8 @@
 
 public class Car
 {
-    public string Name { get; set; }
-    public string Date { get; set; }
+    public required string Name { get; set; }
+    public required string Date { get; set; }
 
     public DateTime? DateDT
     {
@@ -12,7 +12,7 @@ public class Car
             return DateTime.TryParse(Date, out DateTime result) ? result : null;
         }
     }
-    public string Price { get; set; }
+    public required string Price { get; set; }
     public double PriceD
     {
         get

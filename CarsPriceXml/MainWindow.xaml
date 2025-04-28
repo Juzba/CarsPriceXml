@@ -5,31 +5,30 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:CarsPriceXml"
         mc:Ignorable="d"
-        Title="MainWindow" Height="650" Width="800">
+        Title="MainWindow" Height="850" Width="800">
     <Grid Margin="-10,0,10,0">
-        <Button x:Name="ButtonOpen" Content="Open file" HorizontalAlignment="Left" Height="62" Margin="661,42,0,0" VerticalAlignment="Top" Width="116" Click="ButtonOpen_Click" Background="#FF3FB6E3" FontSize="15">
+        <Button x:Name="ButtonOpen" Content="Open file" HorizontalAlignment="Left" Height="62" Margin="661,42,0,0" VerticalAlignment="Top" Width="116" Click="ButtonOpenXmlFile_Click" Background="#FF3FB6E3" FontSize="15">
             <Button.Effect>
                 <DropShadowEffect/>
             </Button.Effect>
         </Button>
 
-        <DataGrid x:Name="DataGridInput" HorizontalAlignment="Left" HeadersVisibility="Column" Height="155" Margin="46,162,0,0" VerticalAlignment="Top" Width="512" d:ItemsSource="{d:SampleData ItemCount=5}" AutoGenerateColumns="False" AlternationCount="1" AlternatingRowBackground="#FFD9D2D2">
+        <DataGrid x:Name="DataGridInput" HorizontalAlignment="Left" HeadersVisibility="Column" Height="155" Margin="46,162,0,0" VerticalAlignment="Top" Width="364" d:ItemsSource="{d:SampleData ItemCount=5}" AutoGenerateColumns="False" AlternationCount="1" AlternatingRowBackground="#FFD9D2D2">
             <DataGrid.Columns>
-                <DataGridTextColumn Header="Name" Binding="{Binding Name}" />
-                <DataGridTextColumn Header="Date" Binding="{Binding DateDT, StringFormat='{}{0:dd.MM.yyyy}'}" />
-                <DataGridTextColumn Header="Price" Binding="{Binding PriceD}" />
-                <DataGridTextColumn Header="DPH" Binding="{Binding DPH}" />
+                <DataGridTextColumn Header="Name" Binding="{Binding Name}" Width="*"/>
+                <DataGridTextColumn Header="Date" Binding="{Binding DateDT, StringFormat='{}{0:dd.MM.yyyy}'}" Width="80"/>
+                <DataGridTextColumn Header="Price" Binding="{Binding PriceD, StringFormat='{}{0:N0},-'}" Width="80" />
+                <DataGridTextColumn Header="DPH" Binding="{Binding DPH}" Width="80" />
             </DataGrid.Columns>
             <DataGrid.CellStyle>
                 <Style/>
             </DataGrid.CellStyle>
         </DataGrid>
-        
-        <TextBlock x:Name="textBlockError" HorizontalAlignment="Left" Height="26" Margin="46,91,0,0" TextWrapping="Wrap" Text="Error" VerticalAlignment="Top" Width="212" FontSize="15"/>
-        <TextBlock x:Name="textBlockPath" HorizontalAlignment="Left" Height="44" Margin="46,42,0,0" TextWrapping="Wrap" Text="Path" VerticalAlignment="Top" Width="574" FontSize="15"/>
-        <TextBlock x:Name="textBlock" HorizontalAlignment="Left" Height="26" Margin="46,122,0,0" TextWrapping="Wrap" Text="Text" VerticalAlignment="Top" Width="212" FontSize="15"/>
 
-        <DataGrid x:Name="DataGridResult"  ItemsSource="{Binding Cars}" HorizontalAlignment="Left" Height="255" Margin="46,339,0,0" VerticalAlignment="Top" Width="512" d:ItemsSource="{d:SampleData ItemCount=5}" GridLinesVisibility="Horizontal" FontSize="14" AutoGenerateColumns="False" CanUserResizeRows="False" CanUserDeleteRows="False" CanUserResizeColumns="False" HeadersVisibility="Column" >
+        <TextBlock x:Name="textBlockError" HorizontalAlignment="Left" Height="50" Margin="46,97,0,0" TextWrapping="Wrap" Text="Error" VerticalAlignment="Top" Width="580"/>
+        <TextBlock x:Name="textBlockPath" HorizontalAlignment="Left" Height="50" Margin="46,42,0,0" TextWrapping="Wrap" Text="Path" VerticalAlignment="Top" Width="580"/>
+
+        <DataGrid x:Name="DataGridResult"  ItemsSource="{Binding Cars}" HorizontalAlignment="Left" Height="355" Margin="46,339,0,0" VerticalAlignment="Top" Width="364" d:ItemsSource="{d:SampleData ItemCount=5}" GridLinesVisibility="Horizontal" FontSize="14" AutoGenerateColumns="False" CanUserResizeRows="False" CanUserDeleteRows="False" CanUserResizeColumns="False" HeadersVisibility="Column" >
             <DataGrid.Columns>
                 <DataGridTemplateColumn Header="Nazev modelu" Width="*">
                     <DataGridTemplateColumn.HeaderTemplate>
@@ -47,7 +46,7 @@
                                 <TextBlock Text="Název modelu" FontWeight="Bold" FontSize="16" Grid.Row="0" Grid.Column="0" Margin="5 0 0 0" />
                                 <TextBlock Text="Cena bez DPH" FontWeight="Bold" Grid.Row="1" Grid.Column="0" Margin="5 0 0 0" />
                                 <TextBlock Text="Cena s DPH" FontWeight="Bold" Grid.Row="1" Grid.Column="2" Margin="5 0 0 0" />
-                                
+
                             </Grid>
                         </DataTemplate>
                     </DataGridTemplateColumn.HeaderTemplate>
@@ -65,7 +64,7 @@
                                 </Grid.ColumnDefinitions>
 
                                 <TextBlock Text="{Binding Name}" Grid.Row="0" Grid.Column="0" FontWeight="Bold" Margin="10 0 0 0"/>
-                                <TextBlock Text="{Binding Price, StringFormat='C'}" Grid.Row="1" Grid.Column="0" Margin="10 0 0 0" />
+                                <TextBlock Text="{Binding Price}" Grid.Row="1" Grid.Column="0" Margin="10 0 0 0" />
                                 <TextBlock Text="{Binding PriceWithDPH}" Grid.Row="1" Grid.Column="1" Grid.ColumnSpan="1" Margin="10 0 0 0" />
                             </Grid>
                         </DataTemplate>
@@ -73,5 +72,11 @@
                 </DataGridTemplateColumn>
             </DataGrid.Columns>
         </DataGrid>
+        <ComboBox x:Name="comboBox" HorizontalAlignment="Left" Height="50" Margin="478,162,0,0" VerticalAlignment="Top" Width="258" RenderTransformOrigin="0.491,-0.763" FontSize="15" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" DropDownClosed="ComboBoxClosed">
+            <ComboBoxItem  Content="Prodáno o víkendu" IsSelected="True"/>
+            <ComboBoxItem Content="Prodáno v týdnu" />
+            <ComboBoxItem Content="Prodáno celkem"/>
+        </ComboBox>
+        <TextBlock x:Name="text" HorizontalAlignment="Left" Height="175" Margin="478,322,0,0" TextWrapping="Wrap" Text="Error" VerticalAlignment="Top" Width="258"/>
     </Grid>
 </Window>

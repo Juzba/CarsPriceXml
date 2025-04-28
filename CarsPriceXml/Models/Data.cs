@@ -8,6 +8,6 @@ namespace XmlCarsPriceApp.Models
     public class Data
     {
         [XmlElement("Car")]
-        public List<Car> Cars { get; set; }
+        public List<Car> Cars { get; set; } = new();
     }
 }
