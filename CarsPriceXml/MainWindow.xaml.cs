@@ -53,29 +53,27 @@ public partial class MainWindow : Window
                 if (isCarInList) continue;
                 else
                 {
-                    // car not exist in carPricesList -> Creating new car
+                    // car not exist in carPricesList -> Creating new car in list
                     if (Functions.SumCondition(this, car))
                         _carPricesList.Add(new CarPrice(car.Name, car.Price, Functions.DPHCalc(car.Price, car.DPH)));
                     else
-                        // car is created with zero price.
+                        // car name is created with zero price.
                         _carPricesList.Add(new CarPrice(car.Name, 0, 0));
                 }
             }
-
 
             DataGridInput.ItemsSource = _carList;
             DataGridResult.ItemsSource = _carPricesList;
             Functions.AddMessage(this, "Výpočet hotov.");
         }
-        else if (_carList.Count < 1 && _isFileOpen)
-        {
-            Functions.AddMessage(this, "Žádná položka.");
-        }
-
     }
+
 
     private void ButtonOpenXmlFile_Click(object sender, RoutedEventArgs e)
     {
+        _isFileOpen = false;
+        int count = 0;
+        int countError = 0;
         _carList = new();
         DataGridInput.ItemsSource = null;
         DataGridResult.ItemsSource = null;
@@ -87,16 +85,22 @@ public partial class MainWindow : Window
         if (openFD.ShowDialog() == true)
         {
             XmlDocument xmlDoc = new XmlDocument();
+            XmlNodeList? carNodes = null;
             textBlockPath.Text = openFD.FileName;
 
-
-            xmlDoc.Load(openFD.FileName);
-
-            XmlNodeList? carNodes = xmlDoc.DocumentElement?.SelectNodes("/Data/Car");
+            try
+            {
+                xmlDoc.Load(openFD.FileName);
+                carNodes = xmlDoc.DocumentElement?.SelectNodes("/Data/Car");
+            }
+            catch (Exception)
+            {
+                Functions.AddMessage(this, $"XML obsahuje chyby.");
+                //throw;
+            }
 
             if (carNodes != null)
             {
-                int count = 0;
 
                 foreach (XmlNode node in carNodes)
                 {
@@ -118,19 +122,21 @@ public partial class MainWindow : Window
                     }
                     else
                     {
-                        Functions.AddMessage(this, $"Chyba XML Car číslo{count}!", false);
+                        Functions.AddMessage(this, $"Chyba zadání v Car číslo{count}!", false);
+                        countError++;
                     }
                 }
+
+
+                if (_carList.Count - countError > 0)
+                {
+                    _isFileOpen = true;
+                    Functions.AddMessage(this, $"Načteno {count - countError} položek z XML.", false);
+                    MainProg();
+                }
+
             }
         }
-
-        if (_carList.Count > 0)
-        {
-            _isFileOpen = true;
-            Functions.AddMessage(this, "Soubor XML načten.", false);
-            MainProg();
-        }
-
     }
 
 
