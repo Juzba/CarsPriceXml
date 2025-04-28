@@ -1,6 +1,7 @@
 ﻿using CarsPriceXml.Components;
 using CarsPriceXml.Models;
 using Microsoft.Win32;
+using System.Globalization;
 using System.IO;
 using System.Windows;
 using System.Xml.Serialization;
@@ -12,7 +13,6 @@ public partial class MainWindow : Window
 {
     Data _data = new();
     bool _isFileOpen = false;
-    int _count = 0;
 
     public MainWindow()
     {
@@ -25,9 +25,6 @@ public partial class MainWindow : Window
 
         if (_isFileOpen)
         {
-
-            _count++;
-            text.Text = _count.ToString();
 
             foreach (var car in _data.Cars)
             {
