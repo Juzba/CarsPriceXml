@@ -29,6 +29,13 @@
 	</Car>
 
 	<Car>
+		<Name>Škoda Oktávia</Name>
+		<Date>5.12.2010</Date>
+		<Price>500.000,-</Price>
+		<DPH>20</DPH>
+	</Car>
+
+	<Car>
 		<Name>Škoda Fabia</Name>
 		<Date>5.12.2010</Date>
 		<Price>350.000,-</Price>

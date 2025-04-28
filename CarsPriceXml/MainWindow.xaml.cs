@@ -99,6 +99,7 @@ public partial class MainWindow : Window
                 catch (Exception)
                 {
                     Functions.AddMessage(this, "Chyba čtení XML.");
+                    _isFileOpen = false;
                     //throw;
                 }
             }

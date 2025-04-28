@@ -122,7 +122,7 @@
             <ComboBoxItem Content="Prodáno v týdnu" />
             <ComboBoxItem Content="Prodáno celkem"/>
         </ComboBox>
-        <TextBox x:Name="textBox" HorizontalAlignment="Left" Height="244" Margin="478,268,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="258" Foreground="White" Padding="10,0,10,10">
+        <TextBox x:Name="textBox" HorizontalAlignment="Left" Height="244" Margin="478,268,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="258" Foreground="White" Padding="25,15,25,15">
             <TextBox.Background>
                 <SolidColorBrush Color="White" Opacity="0"/>
             </TextBox.Background>
