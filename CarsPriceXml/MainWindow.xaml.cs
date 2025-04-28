@@ -1,7 +1,6 @@
 ﻿using CarsPriceXml.Components;
 using CarsPriceXml.Models;
 using Microsoft.Win32;
-using System.Globalization;
 using System.IO;
 using System.Windows;
 using System.Xml.Serialization;
@@ -13,26 +12,28 @@ public partial class MainWindow : Window
 {
     Data _data = new();
     bool _isFileOpen = false;
+    List<CarPrice> _carPricesList = new();
+
 
     public MainWindow()
     {
         InitializeComponent();
     }
 
+
     private void MainProg()
     {
-        List<CarPrice> carPricesList = new();
+        _carPricesList = new();
 
-        if (_isFileOpen)
+        if (_isFileOpen && _data.Cars.Count > 0)
         {
 
             foreach (var car in _data.Cars)
             {
-
                 bool isCarInList = false;
 
-                foreach (var item in carPricesList)
-                {
+
+                foreach (var item in _carPricesList)
                     if (item.Name.Contains(car.Name))
                     {
                         isCarInList = true;
@@ -45,39 +46,37 @@ public partial class MainWindow : Window
                         }
                         break;
                     }
-                }
+
+
                 if (isCarInList) continue;
                 else
                 {
+                    // car not exist in carPricesList -> Creating new car
                     if (Functions.SumCondition(this, car))
-                        carPricesList.Add(new CarPrice(car.Name, car.PriceD, Functions.DPHCalc(car.PriceD, car.DPH)));
+                        _carPricesList.Add(new CarPrice(car.Name, car.PriceD, Functions.DPHCalc(car.PriceD, car.DPH)));
                     else
-                        carPricesList.Add(new CarPrice(car.Name, 0, 0));
+                        // car is created with zero price.
+                        _carPricesList.Add(new CarPrice(car.Name, 0, 0));
                 }
             }
 
+
             DataGridInput.ItemsSource = _data.Cars;
-            DataGridResult.ItemsSource = carPricesList;
+            DataGridResult.ItemsSource = _carPricesList;
+            Functions.AddMessage(this, "Výpočet hotov.");
+        }
+        else if (_data.Cars.Count < 1 && _isFileOpen)
+        {
+            Functions.AddMessage(this, "Žádná položka.");
         }
 
     }
 
-
-
-
-
-
-
-
-
-
-
-
     private void ButtonOpenXmlFile_Click(object sender, RoutedEventArgs e)
     {
-        textBlockError.Text = "";
-        textBlockError.Visibility = Visibility.Hidden;
-
+        _data = new();
+        DataGridInput.ItemsSource = null;
+        DataGridResult.ItemsSource = null;
 
         OpenFileDialog openFD = new();
         openFD.InitialDirectory = Directory.GetCurrentDirectory();
@@ -94,22 +93,22 @@ public partial class MainWindow : Window
                 try
                 {
                     _data = (Data)serializer.Deserialize(reader);
+                    _isFileOpen = true;
+                    Functions.AddMessage(this, "Soubor XML spuštěn.", false);
                 }
-
                 catch (Exception)
                 {
-                    textBlockError.Visibility = Visibility.Visible;
-                    textBlockError.Text = $"Chyba čtení XML.";
+                    Functions.AddMessage(this, "Chyba čtení XML.");
                     //throw;
                 }
             }
 
-            _isFileOpen = true;
-            MainProg();
+            if (_isFileOpen) MainProg();
         }
     }
 
 
+    // Combo box change, start sum
     private void ComboBoxClosed(object sender, EventArgs e)
     {
         MainProg();

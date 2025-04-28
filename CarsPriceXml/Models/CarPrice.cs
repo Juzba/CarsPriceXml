@@ -13,7 +13,6 @@
             Name = name;
             Price = price;
             PriceWithDPH = priceWithDph;
-
         }
     }
 }
