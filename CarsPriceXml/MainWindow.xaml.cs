@@ -3,16 +3,16 @@ using CarsPriceXml.Models;
 using Microsoft.Win32;
 using System.IO;
 using System.Windows;
-using System.Xml.Serialization;
+using System.Xml;
 using XmlCarsPriceApp.Models;
 
 namespace CarsPriceXml;
 
 public partial class MainWindow : Window
 {
-    Data _data = new();
     bool _isFileOpen = false;
     List<CarPrice> _carPricesList = new();
+    List<Car> _carList = new();
 
 
     public MainWindow()
@@ -25,15 +25,17 @@ public partial class MainWindow : Window
     {
         _carPricesList = new();
 
-        if (_isFileOpen && _data.Cars.Count > 0)
+        if (_isFileOpen && _carList.Count > 0)
         {
 
-            foreach (var car in _data.Cars)
+            foreach (var car in _carList)
             {
                 bool isCarInList = false;
 
 
                 foreach (var item in _carPricesList)
+
+                    // if item is already in seznam _carPriceList
                     if (item.Name.Contains(car.Name))
                     {
                         isCarInList = true;
@@ -41,8 +43,8 @@ public partial class MainWindow : Window
                         // sell on weekend, week or evrything
                         if (Functions.SumCondition(this, car))
                         {
-                            item.Price += car.PriceD;
-                            item.PriceWithDPH += Functions.DPHCalc(car.PriceD, car.DPH);
+                            item.Price += car.Price;
+                            item.PriceWithDPH += Functions.DPHCalc(car.Price, car.DPH);
                         }
                         break;
                     }
@@ -53,7 +55,7 @@ public partial class MainWindow : Window
                 {
                     // car not exist in carPricesList -> Creating new car
                     if (Functions.SumCondition(this, car))
-                        _carPricesList.Add(new CarPrice(car.Name, car.PriceD, Functions.DPHCalc(car.PriceD, car.DPH)));
+                        _carPricesList.Add(new CarPrice(car.Name, car.Price, Functions.DPHCalc(car.Price, car.DPH)));
                     else
                         // car is created with zero price.
                         _carPricesList.Add(new CarPrice(car.Name, 0, 0));
@@ -61,11 +63,11 @@ public partial class MainWindow : Window
             }
 
 
-            DataGridInput.ItemsSource = _data.Cars;
+            DataGridInput.ItemsSource = _carList;
             DataGridResult.ItemsSource = _carPricesList;
             Functions.AddMessage(this, "Výpočet hotov.");
         }
-        else if (_data.Cars.Count < 1 && _isFileOpen)
+        else if (_carList.Count < 1 && _isFileOpen)
         {
             Functions.AddMessage(this, "Žádná položka.");
         }
@@ -74,7 +76,7 @@ public partial class MainWindow : Window
 
     private void ButtonOpenXmlFile_Click(object sender, RoutedEventArgs e)
     {
-        _data = new();
+        _carList = new();
         DataGridInput.ItemsSource = null;
         DataGridResult.ItemsSource = null;
 
@@ -84,28 +86,51 @@ public partial class MainWindow : Window
 
         if (openFD.ShowDialog() == true)
         {
+            XmlDocument xmlDoc = new XmlDocument();
             textBlockPath.Text = openFD.FileName;
 
-            XmlSerializer serializer = new XmlSerializer(typeof(Data));
 
-            using (StreamReader reader = new(openFD.FileName))
+            xmlDoc.Load(openFD.FileName);
+
+            XmlNodeList? carNodes = xmlDoc.DocumentElement?.SelectNodes("/Data/Car");
+
+            if (carNodes != null)
             {
-                try
+                int count = 0;
+
+                foreach (XmlNode node in carNodes)
                 {
-                    _data = (Data)serializer.Deserialize(reader);
-                    _isFileOpen = true;
-                    Functions.AddMessage(this, "Soubor XML spuštěn.", false);
-                }
-                catch (Exception)
-                {
-                    Functions.AddMessage(this, "Chyba čtení XML.");
-                    _isFileOpen = false;
-                    //throw;
+                    count++;
+                    string? name = node?.SelectSingleNode("Name")?.InnerText;
+                    string? date = node?.SelectSingleNode("Date")?.InnerText;
+                    string? price = node?.SelectSingleNode("Price")?.InnerText;
+                    string? dph = node?.SelectSingleNode("DPH")?.InnerText;
+
+                    if (
+                        name?.Length > 2
+                        && DateTime.TryParse(date, out DateTime parsedDate)
+                        && double.TryParse(dph, out double parsedDph)
+                        && price?.Length > 3
+                        && double.TryParse(price.Remove(price.Length - 2).Replace(".", ""), out double parsedPrice)
+                        )
+                    {
+                        _carList.Add(new Car(name, parsedDate, parsedPrice, parsedDph));
+                    }
+                    else
+                    {
+                        Functions.AddMessage(this, $"Chyba XML Car číslo{count}!", false);
+                    }
                 }
             }
-
-            if (_isFileOpen) MainProg();
         }
+
+        if (_carList.Count > 0)
+        {
+            _isFileOpen = true;
+            Functions.AddMessage(this, "Soubor XML načten.", false);
+            MainProg();
+        }
+
     }
 
 

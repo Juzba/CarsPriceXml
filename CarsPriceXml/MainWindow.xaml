@@ -42,7 +42,7 @@
                     </DataGridTemplateColumn.Header>
                     <DataGridTemplateColumn.CellTemplate>
                         <DataTemplate>
-                            <TextBlock Text="{Binding DateDT , StringFormat='{}{0:d.MM.yyyy}'}" Margin="10,0,0,0" />
+                            <TextBlock Text="{Binding Date , StringFormat='{}{0:d.MM.yyyy}'}" Margin="10,0,0,0" />
                         </DataTemplate>
                     </DataGridTemplateColumn.CellTemplate>
                 </DataGridTemplateColumn>
@@ -53,7 +53,7 @@
                     </DataGridTemplateColumn.Header>
                     <DataGridTemplateColumn.CellTemplate>
                         <DataTemplate>
-                            <TextBlock Text="{Binding PriceD , StringFormat='{}{0:N0},-', ConverterCulture=de-DE}" Margin="10,0,0,0" />
+                            <TextBlock Text="{Binding Price , StringFormat='{}{0:N0},-', ConverterCulture=de-DE}" Margin="10,0,0,0" />
                         </DataTemplate>
                     </DataGridTemplateColumn.CellTemplate>
                 </DataGridTemplateColumn>
