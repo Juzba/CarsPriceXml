@@ -25,16 +25,15 @@ public partial class MainWindow : Window
     {
         _carPricesList = new();
 
+
         if (_isFileOpen && _carList.Count > 0)
         {
-
             foreach (var car in _carList)
             {
                 bool isCarInList = false;
 
 
                 foreach (var item in _carPricesList)
-
                     // if item is already in seznam _carPriceList
                     if (item.Name.Contains(car.Name))
                     {

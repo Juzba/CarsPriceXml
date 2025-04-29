@@ -37,6 +37,5 @@ namespace CarsPriceXml.Components
 
             mainWindow.textBox.ScrollToEnd();
         }
-
     }
 }
