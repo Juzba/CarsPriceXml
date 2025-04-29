@@ -1,18 +1,18 @@
 <Data>
 
-   <Car>
-      <Name>Škoda Oktávia</Name>
-      <Date>2.12.2010</Date>
-      <Price>500.000,-</Price>
-      <DPH>20</DPH>
-   </Car>
+	<Car>
+		<Name>Škoda Oktávia</Name>
+		<Date>2.12.2010</Date>
+		<Price>500.000,-</Price>
+		<DPH>20</DPH>
+	</Car>
 
-   <Car>
-      <Name>Škoda Felicia</Name>
-      <Date>3.12.2000 </Date>
-      <Price>210.000,-</Price>
-      <DPH>20</DPH>
-   </Car>
+	<Car>
+		<Name>Škoda Felicia</Name>
+		<Date>3.12.2000 </Date>
+		<Price>210.000,-</Price>
+		<DPH>20</DPH>
+	</Car>
 
 	<Car>
 		<Name>Škoda Fabia</Name>
