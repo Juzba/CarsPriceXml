@@ -5,24 +5,26 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:CarsPriceXml"
         mc:Ignorable="d"
-        Title="CarPriceTracker XML" Height="850" Width="800">
+        SizeToContent="WidthAndHeight" 
+        Title="CarPriceTracker XML" Background="White" >
 
 
-    <Grid Margin="-10,0,10,0">
+
+    <Grid Height="600" Width="1200">
         <Grid.Background>
             <LinearGradientBrush EndPoint="0.5,1" StartPoint="0.5,0">
                 <GradientStop Color="#FF141414" Offset="0.322"/>
-                <GradientStop Color="#FF103778" Offset="0.86"/>
+                <GradientStop Color="#FF13678A" Offset="0.86"/>
                 <GradientStop Color="#FF151F30" Offset="0.152"/>
             </LinearGradientBrush>
         </Grid.Background>
-        <Button x:Name="ButtonOpen" Content="Open file" HorizontalAlignment="Left" Height="62" Margin="620,62,0,0" VerticalAlignment="Top" Width="116" Click="ButtonOpenXmlFile_Click" Background="#FF0593A2" FontSize="15" BorderBrush="#FFE3371E" RenderTransformOrigin="1,0.5">
+        <Button x:Name="ButtonOpen" Content="Open file" HorizontalAlignment="Left" Height="62" Margin="1026,81,0,0" VerticalAlignment="Top" Width="116" Click="ButtonOpenXmlFile_Click" Background="#FF45C4B0" FontSize="15" BorderBrush="#FFE3371E" RenderTransformOrigin="1,0.5">
             <Button.Effect>
                 <DropShadowEffect/>
             </Button.Effect>
         </Button>
 
-        <DataGrid x:Name="DataGridInput" HorizontalAlignment="Left"  HeadersVisibility="Column" Height="212" Margin="46,162,0,0" VerticalAlignment="Top" Width="364" d:ItemsSource="{d:SampleData ItemCount=5}" AutoGenerateColumns="False" AlternationCount="1" AlternatingRowBackground="#FFD9D2D2" ScrollViewer.CanContentScroll="False" FrozenColumnCount="1">
+        <DataGrid x:Name="DataGridInput" HorizontalAlignment="Left"  HeadersVisibility="Column" Height="359" Margin="46,188,0,0" VerticalAlignment="Top" Width="364" d:ItemsSource="{d:SampleData ItemCount=5}" AutoGenerateColumns="False" AlternationCount="1" AlternatingRowBackground="#FFD9D2D2" ScrollViewer.CanContentScroll="False" FrozenColumnCount="1">
             <DataGrid.Columns>
 
                 <DataGridTemplateColumn Width="*">
@@ -71,9 +73,9 @@
 
             </DataGrid.Columns>
         </DataGrid>
-        <TextBlock x:Name="textBlockPath" HorizontalAlignment="Left" Height="81" Margin="46,62,0,0" TextWrapping="Wrap" Text="Path" VerticalAlignment="Top" Width="561" Foreground="#FFE3371E"/>
+        <TextBlock x:Name="textBlockPath" HorizontalAlignment="Left" Height="81" Margin="46,81,0,0" TextWrapping="Wrap" Text="Path" VerticalAlignment="Top" Width="778" Foreground="#FFE3371E" FontSize="15" FontFamily="Bahnschrift Condensed" FontWeight="Bold"/>
 
-        <DataGrid x:Name="DataGridResult"  ItemsSource="{Binding Cars}" HorizontalAlignment="Left" Height="359" Margin="46,417,0,0" VerticalAlignment="Top" Width="364" d:ItemsSource="{d:SampleData ItemCount=5}" GridLinesVisibility="Horizontal" FontSize="14" AutoGenerateColumns="False" CanUserResizeRows="False" CanUserDeleteRows="False" CanUserResizeColumns="False" HeadersVisibility="Column" >
+        <DataGrid x:Name="DataGridResult"  ItemsSource="{Binding Cars}" HorizontalAlignment="Left" Height="359" Margin="460,188,0,0" VerticalAlignment="Top" Width="364" d:ItemsSource="{d:SampleData ItemCount=5}" GridLinesVisibility="Horizontal" FontSize="14" AutoGenerateColumns="False" CanUserResizeRows="False" CanUserDeleteRows="False" CanUserResizeColumns="False" HeadersVisibility="Column" >
             <DataGrid.Columns>
                 <DataGridTemplateColumn Header="Nazev modelu" Width="*">
                     <DataGridTemplateColumn.HeaderTemplate>
@@ -117,16 +119,16 @@
                 </DataGridTemplateColumn>
             </DataGrid.Columns>
         </DataGrid>
-        <ComboBox x:Name="comboBox" HorizontalAlignment="Left" Height="50" Margin="478,162,0,0" VerticalAlignment="Top" Width="258" RenderTransformOrigin="0.491,-0.763" FontSize="15" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" DropDownClosed="ComboBoxClosed" BorderBrush="#FFE3371E">
+        <ComboBox x:Name="comboBox" HorizontalAlignment="Left" Height="50" Margin="884,188,0,0" VerticalAlignment="Top" Width="258" RenderTransformOrigin="0.491,-0.763" FontSize="15" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" DropDownClosed="ComboBoxClosed" BorderBrush="#FFE3371E">
             <ComboBoxItem  Content="Prodáno o víkendu" IsSelected="True"/>
             <ComboBoxItem Content="Prodáno v týdnu" />
             <ComboBoxItem Content="Prodáno celkem"/>
         </ComboBox>
-        <TextBox x:Name="textBox" HorizontalAlignment="Left" Height="244" Margin="478,268,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="258" Foreground="White" Padding="25,15,25,15">
+        <TextBox x:Name="textBox" HorizontalAlignment="Left" Height="244" Margin="884,300,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="258" Foreground="White" Padding="25,15,25,15">
             <TextBox.Background>
                 <SolidColorBrush Color="White" Opacity="0"/>
             </TextBox.Background>
         </TextBox>
-        <Label x:Name="headerLabel" Content="Car Price Tracker XML" HorizontalAlignment="Center" Height="63" Margin="0,10,0,0" VerticalAlignment="Top" Width="780" Foreground="#FFE3371E" FontSize="20" HorizontalContentAlignment="Center" FontFamily="AniMe Matrix - MB_EN"/>
+        <Label x:Name="headerLabel" Content="Car Price Tracker" HorizontalAlignment="Center" Height="63" Margin="0,10,0,0" VerticalAlignment="Top" Width="374" Foreground="#FFE3371E" FontSize="22" HorizontalContentAlignment="Center" FontFamily="BIZ UDGothic" FontWeight="Bold"/>
     </Grid>
 </Window>
